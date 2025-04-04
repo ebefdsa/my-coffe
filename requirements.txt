@@ -1,3 +1,7 @@
+Django
+gunicorn
+whitenoise  # For static files
+psycopg2-binary  # If using PostgreSQL
 asgiref==3.8.1
 astroid==3.3.6
 colorama==0.4.6
