@@ -1,0 +1,81 @@
+{% extends 'baes.html' %}
+{% load static%}
+
+{% block title %} | Главная{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!--jumbotron 1-->
+    <section>
+      <div class="jumbotron jumbotron-fluid p-3 m-0 text-center" >
+        <div class="d-inline-block align-top" >
+          <h1 class="display-4">My Coffee</h1>
+          <p class="lead" >
+            Мир кофе в ваших руках.
+          </p>
+        </div>
+        <div class="d-inline-block">
+          <img src="{% static 'img/coffee.svg' %}" class="mycoffee-svg" alt="">
+        </div>
+      </div>
+    </section>
+
+    <!--carousel-->
+    <section>
+      <div id="carouselMyCoffee" class="carousel slide carousel-fade" data-ride="carousel">
+        <div class="carousel-inner">
+
+          <div class="carousel-item active" data-interval="1500">
+              <img src="{% static 'img/img1.jpg' %}" class="d-block w-100" alt="...">
+          </div>
+
+          <div class="carousel-item" data-interval="1500">
+            <img src="{% static 'img/img2.jpg' %}" class="d-block w-100" alt="...">
+          </div>
+
+          <div class="carousel-item" data-interval="1500">
+            <img src="{% static 'img/img3.jpg' %}" class="d-block w-100" alt="...">
+          </div>
+
+          <div class="carousel-item" data-interval="1500">
+            <img src="{% static 'img/img4.jpg' %}" class="d-block w-100" alt="...">
+          </div>
+
+          <div class="carousel-item" data-interval="1500">
+            <img src="{% static 'img/img5.jpg' %}" class="d-block w-100" alt="...">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!--jumbotron 2-->
+    <hr>
+
+    <!--new product-->
+    <section>
+      <h1 class="text-center">Последние продукты</h1>
+      <div class="container-fluid">
+        <div class="row p-5" style="padding-left: 17% !important;">
+
+          {% for pro in products|slice:':10' %}
+          <div>
+            <div class="card m-2" style="width: 18rem;">
+              <img src="{{pro.photo.url}}" class="card-img-top" alt="{{pro.name}}">
+              <div class="card-body">
+                <h5 class="card-title">{{pro.name}}</h5>
+                <p class="card-text text-truncate ">{{pro.description}}</p>
+                <a href="{% url 'product' pro_id=pro.id %}" class="btn btn-warning">Показать подробности</a>
+              </div>
+            </div>
+          </div>
+
+          {% endfor %}
+
+        </div>
+      </div>
+    </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'baes.html' %}
+
+{% block title %} | Заказы {% endblock %}
+
+{% block content %}
+<div class="my-form container p-5 my-5 rounded border border-warning">
+    <h2 class="text-center">Заказы</h2>
+    <hr>
+    {% if not request.user.is_authenticated or request.user.is_anonymous %}
+    <h5 class="alert alert-warning">Вы должны быть <a href="{% url 'signin' %}" class="text-dark">вошли в систему</a> </h5>
+
+    {% elif all_orders %}
+        {% if all_orders.count > 0 %}
+        <h5 class="alert alert-warning">Найдено {{all_orders.count}} заказов</h5>
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Номер заказа</th>
+                <th scope="col">Дата и время</th>
+                <th scope="col">Количество товаров</th>
+                <th scope="col">Общая сумма</th>
+                <th scope="col">Завершен</th>    
+              </tr>
+            </thead>
+            <tbody >
+        {% endif %}                
+        {% for order in all_orders %}
+        <tr>
+            <td>
+                {{order.id}}
+            </td>
+            <td>
+                {{order.order_date}}
+            </td>
+            <td>
+                {{order.order_date}} <!-- This seems to be a mistake; should it be order.items_count or similar? -->
+            </td>
+            <td>
+                {{order.total}}
+            </td>
+            <td>
+                {% if order.is_finished == True %}
+                Да
+                {% else %}
+                Нет
+                {% endif %}
+            </td>
+        </tr> 
+        {% endfor %}
+        {% if all_orders.count > 0 %}
+        </tbody>
+        </table>
+        {% endif %}                
+
+    {% else %}
+
+
+    <h4 class="alert alert-waring">
+        Нет заказов
+
+        <a href=" {% url 'products' %} " class="text-dark">Все товары</a>
+
+    </h4>
+
+    {% endif %}
+
+    <hr>
+
+
+</div>    
+{% endblock %}

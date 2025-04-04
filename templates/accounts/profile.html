@@ -1,0 +1,72 @@
+{% extends 'baes.html' %}
+{% block title %} | Профиль{% endblock %}
+{% block content %}
+<div class="my-form container p-5 my-5 rounded border border-warning">
+    <h2 class="text-center">Профиль</h2>
+    <hr>
+    {% if request.user.is_authenticated %}
+    <form method="POST">
+        {% csrf_token %}
+
+        {% include 'partials/_alerts.html' %}
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputFirstName">Имя</label>
+                <input type="text" class="form-control" name="fname" id="inputFirstName" required value="{{fname}}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputLastName">Фамилия</label>
+                <input type="text" class="form-control" name="lname" id="inputLastName" required value="{{lname}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputAddress">Адрес</label>
+            <input type="text" class="form-control" name="address" id="inputAddress" placeholder="1234 Main St" required value="{{address}}">
+        </div>
+        <div class="form-group">
+            <label for="inputAddress2">Адрес 2</label>
+            <input type="text" class="form-control" name="address2" id="inputAddress2" placeholder="Квартира, студия или этаж" required value="{{address2}}">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputCity">Город</label>
+                <input type="text" class="form-control" name="city" id="inputCity" required value="{{city}}">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputZip">Штат</label>
+                <input type="text" class="form-control" name="state" id="inputZip" required value="{{state}}">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputZip">Почтовый индекс</label>
+                <input type="text" class="form-control" name="zip" id="zip" placeholder="11111" required value="{{zip}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">Электронная почта</label>
+            <input type="email" readonly class="form-control-plaintext border border-warning rounded" name="email" id="inputEmail" placeholder="name@example.com" required value="{{email}}">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputUsername">Имя пользователя</label>
+                <input type="text" readonly class="form-control-plaintext border border-warning rounded" name="user" id="inputUsername" placeholder="ahmed" required value="{{user}}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword">Пароль</label>
+                <input type="password" class="form-control" name="pass" id="inputPassword" required value="{{pass}}">
+            </div>
+        </div>
+
+        <button type="submit" name="btnsave" class="btn btn-warning">Сохранить изменения</button>
+    </form>
+    {% else %}
+    <h4 class="alert alert-danger">
+        Вы должны быть
+        <a href="{% url 'signin' %}" class="text-dark">
+            авторизованы
+        </a>
+    </h4>
+    {% endif %}
+</div>
+{% endblock %}

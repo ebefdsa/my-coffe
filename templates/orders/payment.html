@@ -1,0 +1,68 @@
+{% extends 'baes.html' %}
+{% block title %} | Оформление заказа{% endblock %}
+{% block content %}
+<div class="my-form container p-5 my-5 rounded border border-warning">
+    <h2 class="text-center">Оформление заказа</h2>
+    <hr>
+
+    {% include 'partials/_alerts.html' %}
+    
+{% if not request.user.is_authenticated or request.user.is_anonymous %}
+<h5 class="alert alert-warning">Вы должны быть
+    <a href="{% url 'signin' %}" class="text-dark">вошли в систему</a>
+</h5>
+{% elif not order %}
+      <h4 class="alert alert-warning">Здесь нет заказов</h4>
+{% else %}
+
+{% if is_added == True %}
+<form method="POST" style="display: none;">
+{% else %}
+<form method="POST">
+{% endif %}
+    {% csrf_token %}
+
+
+    Номер заказа: <span class="my-num">{{order.id}}</span>
+    <hr>
+    Количество товаров:<span class="my-num"> {{orderdetails.count}}</span>
+    <hr>
+    Общая сумма: <span class="my-num">  {{total}}₽</span>
+    <hr>
+    <a href="{% url 'cart' %}" class="btn btn-secondary">Детали корзины</a>
+    <hr>
+   
+
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputship_address">Адрес доставки</label>
+            <input type="text" class="form-control" name="ship_address" id="inputship_address" required value="{{ ship_address }}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputship_phone">Телефон для доставки</label>
+            <input type="text" class="form-control" name="ship_phone" id="inputship_phone" required value="{{ ship_phone }}">
+        </div>
+    </div>
+    
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputcard_number">Номер карты</label>
+            <input type="text" class="form-control" name="card_number" id="inputcard_number" required value="{{ card_number }}" placeholder="3333 3333 3333 3333">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputexpire">Срок действия</label>
+            <input type="text" class="form-control" name="expire" id="inputexpire" placeholder="мм/гг" required value="{{ expire }}">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputsecurity_code">Код безопасности</label>
+            <input type="text" class="form-control" name="security_code" id="inputsecurity_code" placeholder="333" required value="{{ security_code }}">
+        </div>
+    </div>
+    
+    <button type="submit" name="btnpayment" class="btn btn-warning">Оплатить</button>
+</form>
+
+{% endif %}
+</div>
+{% endblock %}

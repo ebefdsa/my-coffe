@@ -1,0 +1,93 @@
+{% extends 'baes.html' %}
+{% load static %}
+
+{% block title %} | Корзина{% endblock %}
+
+{% block content %}
+<div class="my-form container p-5 my-5 rounded border border-warning">
+    <h2 class="text-center">Корзина</h2>
+    <hr>
+    {% if not request.user.is_authenticated or request.user.is_anonymous %}
+    <h5 class="alert alert-warning">Вы должны быть <a href="{% url 'signin' %}" class="text-dark">вошли</a> в систему </h5>
+
+    {% elif order %}
+
+
+    <h5>
+
+        Полное имя: <span class="my-num">{{order.user.first_name|add:' '|add:order.user.last_name}}</span>
+
+        <a href="{% url 'products' %}" class="btn btn-outline-warning float-right m-2">Продолжить покупки</a>
+
+        <a href="{% url 'payment' %}" class="btn btn-outline-secondary float-right m-2">Оформить заказ</a>
+
+
+        <br><br>
+
+        <hr>
+        Номер заказа: <span class="my-num">{{order.id}}</span> 
+        на сумму <span class="my-num">{{total}}₽</span>
+        за <span class="my-num">{{orderdetails.count}}</span> товаров
+
+
+    </h5>
+
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Товар</th>
+            <th scope="col">Изображение</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Подытоги</th>
+            <th scope="col">Управление</th>
+
+          </tr>
+        </thead>
+        <tbody >
+        {% for line in orderdetails %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{line.product.name}}</td>
+            <td><img  src="{{line.product.photo.url}}" style="width:80px;height: 80px" alt=""></td>
+
+            <td>
+              <a href="{% url 'sub_qty' orderdetails_id=line.id %}" class="btn btn-outline-warning btn-sm">-</a>
+              {{line.quantity}}
+              <a href="{% url 'add_qty' orderdetails_id=line.id %}" class="btn btn-outline-warning btn-sm">+</a>
+            </td>
+
+
+            <td>{{line.price}}₽</td>
+
+            <td style="font-weight: bold;color:deeppink" >{% widthratio line.quantity 1 line.price %}₽</td>
+            <td>
+              <a href="{% url 'remove_from_cart'  orderdetails_id=line.id %}" class="btn btn-outline-danger btn-sm">Удалить</a>
+
+            </td>
+          </tr>
+        {% empty %}
+        <h5 class="alert alert-warning">
+            Нет товаров
+        </h5>    
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+
+
+    <h4 class="alert alert-warning">
+        Нет заказов
+
+        <a href=" {% url 'products' %} " class="text-dark">Все товары</a>
+
+    </h4>
+
+    {% endif %}
+
+    <hr>
+
+
+</div>    
+{% endblock %}

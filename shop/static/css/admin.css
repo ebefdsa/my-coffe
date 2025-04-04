@@ -1,0 +1,32 @@
+#header{
+    background: #4e1313;
+    color: black;
+}
+#head{
+    color: #0a0808;
+}
+
+.module h2, .module caption, .inline-group h2,
+#content-related .module h2{
+    background: #3f1111;
+}
+
+div.breadcrumbs{
+    background: #521111;
+}
+.selector-chosen h2,
+.selector .selector-available h2 {
+    background: rgb(87, 11, 11) !important;
+    color: white !important;
+}
+
+
+.button, input[type=submit],
+ input[type=button],
+.submit-row input, a.button,
+.button.default, 
+input[type=submit].default, 
+.submit-row input.default{
+    background: #49160d !important;
+    color: white !important
+}
